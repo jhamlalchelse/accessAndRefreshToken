@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.registercontainer{
+    background-color: rgb(189, 210, 238);
+    margin: 80px 35% 0;
+    padding: 5px 20px 10px;
+    min-height: 400px;
+}
+.errmessage{
+    color: crimson;
+    margin: 0;
+    padding: 0;
+}
+.offscreen{
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+.hide{
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+.valid{
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: green;
+}
+.invalid{
+    color: crimson;
+    margin: 0;
+    padding: 0;
+}
+.instructions{
+    background-color: #789;
+    border-radius: 5px;
+    padding: 5px;
+    color: rgb(0, 23, 126);
+    width: fit-content;
+    font-size: 14px;
+}
