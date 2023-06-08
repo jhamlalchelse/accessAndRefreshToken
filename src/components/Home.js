@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
 
 const Home = () => {
+  const logout = useLogout();
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await logout();
+    navigate('/linkpage', { replace: true });
+  };
   return (
     <>
       <div className="m-3">
@@ -22,7 +30,7 @@ const Home = () => {
           </Link>
         </div>
 
-        <button className=" mt-3 px-3 bg-info-subtle ">Sign Out</button>
+        <button className=" mt-3 px-3 bg-info-subtle" onClick={signOut}>Sign Out</button>
       </div>
     </>
   );

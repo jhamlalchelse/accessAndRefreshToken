@@ -6,7 +6,7 @@ import AuthContext from "../context/AuthProvider";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     navigate(from, { replace: true });
-    return
+    // return
 
     try {
       const body = { user, pwd };
@@ -59,6 +59,14 @@ const Login = () => {
       errRef.current.focus();
     }
   };
+
+  const togglePersist = () =>{
+    setPersist(prev=> !prev)
+  }
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist)
+  }, [persist])
 
   return (
     <div className="registercontainer">
@@ -94,7 +102,14 @@ const Login = () => {
           <button className=" form-control mt-4 mb-1" type="submit">
             Sign In
           </button>
+          <div className="persistCheck">
+            <input type="checkbox" name="persist" id="persist"
+            checked = {persist}
+            onChange={()=> setPersist(togglePersist)} />
+            <label htmlFor="persist">Trust This Device</label>
+          </div>
         </form>
+
         <p>
           Need an Account?
           <Link to={"/register"} className=" ms-1">

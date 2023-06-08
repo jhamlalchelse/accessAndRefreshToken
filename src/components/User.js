@@ -10,7 +10,7 @@ const User = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    const isMounte = true;
+    let isMounte = true;
     const controller = new AbortController();
 
     const getUsers = async () => {
