@@ -4,9 +4,12 @@ import axios from "../api/axios";
 import "./Register.css";
 import AuthContext from "../context/AuthProvider";
 import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
+import useInput from "../hooks/useInput";
+import useToggle from "../hooks/useToggle";
 
 const Login = () => {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,11 +18,12 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("dsadf");
+  const [user, resetUser, userAttribs] = useInput('user','') // useState("");
 
-  const [pwd, setPwd] = useState("sdfa435");
+  const [pwd, setPwd] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
+  const [check, toggleCheck] = useToggle('persist', false)
 
   useEffect(() => {
     userRef.current.focus();
@@ -43,7 +47,8 @@ const Login = () => {
       //   console.log(res.data)
       //   console.log(res.accessToken)
       setAuth({ user, pwd, roles, accessToken });
-      setUser("");
+      // setUser("");
+      resetUser()
       setPwd("");
       navigate(from, { replace: true });
     } catch (error) {
@@ -60,13 +65,13 @@ const Login = () => {
     }
   };
 
-  const togglePersist = () =>{
-    setPersist(prev=> !prev)
-  }
+  // const togglePersist = () =>{
+  //   setPersist(prev=> !prev)
+  // }
 
-  useEffect(() => {
-    localStorage.setItem('persist', persist)
-  }, [persist])
+  // useEffect(() => {
+  //   localStorage.setItem('persist', persist)
+  // }, [persist])
 
   return (
     <div className="registercontainer">
@@ -82,8 +87,7 @@ const Login = () => {
             type="text"
             id="userName"
             ref={userRef}
-            value={user}
-            onChange={({ target }) => setUser(target.value)}
+            {...userAttribs}
             required
             autoComplete="off"
             className=" form-control mb-2"
@@ -103,10 +107,10 @@ const Login = () => {
             Sign In
           </button>
           <div className="persistCheck">
-            <input type="checkbox" name="persist" id="persist"
-            checked = {persist}
-            onChange={()=> setPersist(togglePersist)} />
-            <label htmlFor="persist">Trust This Device</label>
+            <input type="checkbox" name="persist" id="persist" 
+            checked = {check}
+            onChange={toggleCheck} />
+            <label htmlFor="persist" className="ps-1">Trust This Device</label>
           </div>
         </form>
 
